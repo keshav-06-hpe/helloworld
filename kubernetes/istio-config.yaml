@@ -1,19 +1,4 @@
 apiVersion: networking.istio.io/v1beta1
-kind: Gateway
-metadata:
-  name: helloworld-gateway
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: helloworld-virtualservice
@@ -21,7 +6,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - helloworld-gateway
+    - istio-system/istio-ingressgateway
   http:
   - match:
     - uri:
@@ -30,4 +15,4 @@ spec:
     - destination:
         host: helloworld-service
         port:
-          number: 8080
+          number: 5000
